@@ -1,76 +1,138 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Vall 😎</title>
+    <title>Scientific Calc 😎</title>
     <style>
         body {
-            margin: 0;
-            font-family: Arial;
-            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+            background: #1e1e2f;
             color: white;
             text-align: center;
+            font-family: Arial;
         }
 
-        .container {
-            padding: 50px;
-        }
-
-        h1 {
-            font-size: 40px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.1);
-            margin: 20px auto;
+        .calc {
+            margin: 50px auto;
+            width: 300px;
             padding: 20px;
-            width: 250px;
+            background: #2c2c3c;
             border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
         }
 
-        .card:hover {
-            transform: scale(1.05);
+        input {
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: right;
         }
 
         button {
-            padding: 10px 20px;
+            width: 60px;
+            height: 40px;
+            margin: 5px;
             border: none;
-            border-radius: 10px;
-            background: #00ffcc;
+            border-radius: 8px;
             cursor: pointer;
         }
+
+        .btn { background: #00ffcc; }
+        .op { background: #ff7675; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 id="judul">Welcome 😏</h1>
-    <p>jujur gatau ini apa, tapi keren kan 😎</p>
+<h1>Scientific Calculator 🔥</h1>
 
-    <button onclick="sapa()">Klik Gue</button>
+<div class="calc">
+    <input type="text" id="layar">
 
-    <div class="card">
-        <h3>About</h3>
-        <p>gua lagi belajar js 🔥</p>
-    </div>
+    <br>
 
-    <div class="card">
-        <h3>Skill</h3>
-        <p>HTML, JS dikit-dikit 😭</p>
-    </div>
+    <button class="btn" onclick="tambah('7')">7</button>
+    <button class="btn" onclick="tambah('8')">8</button>
+    <button class="btn" onclick="tambah('9')">9</button>
+    <button class="op" onclick="tambah('/')">/</button>
 
-    <div class="card">
-        <h3>Goal</h3>
-        <p>jadi programmer biar gak miskin 😏</p>
-    </div>
+    <br>
+
+    <button class="btn" onclick="tambah('4')">4</button>
+    <button class="btn" onclick="tambah('5')">5</button>
+    <button class="btn" onclick="tambah('6')">6</button>
+    <button class="op" onclick="tambah('*')">*</button>
+
+    <br>
+
+    <button class="btn" onclick="tambah('1')">1</button>
+    <button class="btn" onclick="tambah('2')">2</button>
+    <button class="btn" onclick="tambah('3')">3</button>
+    <button class="op" onclick="tambah('-')">-</button>
+
+    <br>
+
+    <button class="btn" onclick="tambah('0')">0</button>
+    <button class="btn" onclick="hitung()">=</button>
+    <button class="btn" onclick="hapus()">C</button>
+    <button class="op" onclick="tambah('+')">+</button>
+
+    <br>
+
+    <button onclick="sqrt()">√</button>
+    <button onclick="pangkat()">x²</button>
+    <button onclick="log()">log</button>
+
+    <br>
+
+    <button onclick="sin()">sin</button>
+    <button onclick="cos()">cos</button>
+    <button onclick="tan()">tan</button>
 </div>
 
 <script>
-function sapa() {
-    let nama = prompt("nama lu sapa?");
-    document.getElementById("judul").innerHTML =
-        "Halo " + nama + " 👋";
+function tambah(val) {
+    document.getElementById("layar").value += val;
+}
+
+function hitung() {
+    try {
+        document.getElementById("layar").value =
+            eval(document.getElementById("layar").value);
+    } catch {
+        alert("Error 😭");
+    }
+}
+
+function hapus() {
+    document.getElementById("layar").value = "";
+}
+
+function sqrt() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.sqrt(x);
+}
+
+function pangkat() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.pow(x, 2);
+}
+
+function log() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.log10(x);
+}
+
+function sin() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.sin(x);
+}
+
+function cos() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.cos(x);
+}
+
+function tan() {
+    let x = document.getElementById("layar").value;
+    document.getElementById("layar").value = Math.tan(x);
 }
 </script>
 
