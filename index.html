@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Vall 😎</title>
-
-    <!-- INI WAJIB BIAR GAK KEKECILAN -->
+    <title>Vall Calculator 😎</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -13,39 +11,73 @@
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: white;
             text-align: center;
+        }
 
-            /* Biar gak kosong */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        h1 {
+            margin-top: 20px;
+        }
+
+        .btn-start {
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #00c9a7;
+            cursor: pointer;
         }
 
         .calc {
-            margin: 10px auto;
+            margin: 20px auto;
             width: 95%;
             max-width: 420px;
             padding: 20px;
             border-radius: 20px;
             background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
         }
 
         input {
             width: 100%;
             padding: 18px;
             font-size: 24px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            text-align: right;
+            box-sizing: border-box;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
         }
 
         button {
-            padding: 20px;
-            font-size: 20px;
+            width: 100%;
+            height: 65px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #00c9a7;
+            transition: 0.15s;
         }
+
+        button:active {
+            transform: scale(0.92);
+        }
+
+        .op { background: #ff7675; }
+        .equal { background: #ffeaa7; }
+        .mode { background: #74b9ff; }
     </style>
 </head>
 <body>
 
 <h1 id="judul">Klik dulu 😏</h1>
-<button onclick="sapa()">Mulai</button>
+<button class="btn-start" onclick="sapa()">Mulai</button>
 
 <div class="calc">
     <input type="text" id="layar" readonly>
@@ -79,72 +111,48 @@
         <button onclick="sin()">sin</button>
         <button onclick="cos()">cos</button>
         <button onclick="tan()">tan</button>
+        <button style="visibility:hidden"></button>
     </div>
 </div>
 
 <script>
 let mode = "deg";
 
-window.onload = function() {
-    sapa();
-};
-
-// suara klik
-function klikSound() {
-    let audio = new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
-    audio.play();
-}
-
 function sapa() {
     let nama = prompt("Nama lu siapa?");
     let jam = new Date().getHours();
-    let ucapan;
-
-    if (jam < 12) ucapan = "pagi";
-    else if (jam < 18) ucapan = "siang";
-    else ucapan = "malam";
+    let ucapan = jam < 12 ? "pagi" : jam < 18 ? "siang" : "malam";
 
     document.getElementById("judul").innerHTML =
         `Halo ${nama} 👋, selamat ${ucapan}!`;
 }
-}
 
 function tambah(val) {
-    klikSound();
-    document.getElementById("layar").value += val;
+    layar.value += val;
 }
 
 function hitung() {
-    klikSound();
     try {
-        document.getElementById("layar").value =
-            eval(document.getElementById("layar").value);
+        layar.value = eval(layar.value);
     } catch {
         alert("Error 😭");
     }
 }
 
 function hapus() {
-    klikSound();
-    document.getElementById("layar").value = "";
+    layar.value = "";
 }
 
 function sqrt() {
-    klikSound();
-    let x = layar.value;
-    layar.value = Math.sqrt(x);
+    layar.value = Math.sqrt(layar.value);
 }
 
 function pangkat() {
-    klikSound();
-    let x = layar.value;
-    layar.value = Math.pow(x, 2);
+    layar.value = Math.pow(layar.value, 2);
 }
 
 function log() {
-    klikSound();
-    let x = layar.value;
-    layar.value = Math.log10(x);
+    layar.value = Math.log10(layar.value);
 }
 
 function toRad(x) {
@@ -152,25 +160,21 @@ function toRad(x) {
 }
 
 function sin() {
-    klikSound();
     let x = layar.value;
     layar.value = mode === "deg" ? Math.sin(toRad(x)) : Math.sin(x);
 }
 
 function cos() {
-    klikSound();
     let x = layar.value;
     layar.value = mode === "deg" ? Math.cos(toRad(x)) : Math.cos(x);
 }
 
 function tan() {
-    klikSound();
     let x = layar.value;
     layar.value = mode === "deg" ? Math.tan(toRad(x)) : Math.tan(x);
 }
 
 function toggleMode() {
-    klikSound();
     let btn = document.querySelector(".mode");
 
     if (mode === "deg") {
