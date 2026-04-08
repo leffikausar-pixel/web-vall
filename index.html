@@ -13,18 +13,14 @@
             text-align: center;
         }
 
-        h1 {
-            margin-top: 20px;
-        }
+        h1 { margin-top: 20px; }
 
         .btn-start {
             margin: 10px;
             padding: 12px 25px;
-            font-size: 16px;
-            border: none;
             border-radius: 10px;
+            border: none;
             background: #00c9a7;
-            cursor: pointer;
         }
 
         .calc {
@@ -43,9 +39,17 @@
             font-size: 24px;
             border-radius: 10px;
             border: none;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-align: right;
             box-sizing: border-box;
+        }
+
+        .history {
+            max-height: 80px;
+            overflow-y: auto;
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.8;
         }
 
         .grid {
@@ -56,17 +60,15 @@
 
         button {
             width: 100%;
-            height: 65px;
+            height: 60px;
             font-size: 18px;
-            border: none;
             border-radius: 12px;
-            cursor: pointer;
+            border: none;
             background: #00c9a7;
-            transition: 0.15s;
         }
 
         button:active {
-            transform: scale(0.92);
+            transform: scale(0.9);
         }
 
         .op { background: #ff7675; }
@@ -80,51 +82,55 @@
 <button class="btn-start" onclick="sapa()">Mulai</button>
 
 <div class="calc">
+    <div class="history" id="history"></div>
     <input type="text" id="layar" readonly>
 
     <div class="grid">
+        <button onclick="hapusSemua()">AC</button>
+        <button id="delBtn">DEL</button>
+        <button onclick="tambah('%')">%</button>
+        <button class="op" onclick="tambah('/')">/</button>
+
         <button onclick="tambah('7')">7</button>
         <button onclick="tambah('8')">8</button>
         <button onclick="tambah('9')">9</button>
-        <button class="op" onclick="tambah('/')">/</button>
+        <button class="op" onclick="tambah('*')">*</button>
 
         <button onclick="tambah('4')">4</button>
         <button onclick="tambah('5')">5</button>
         <button onclick="tambah('6')">6</button>
-        <button class="op" onclick="tambah('*')">*</button>
+        <button class="op" onclick="tambah('-')">-</button>
 
         <button onclick="tambah('1')">1</button>
         <button onclick="tambah('2')">2</button>
         <button onclick="tambah('3')">3</button>
-        <button class="op" onclick="tambah('-')">-</button>
-
-        <button onclick="tambah('0')">0</button>
-        <button onclick="hapus()">C</button>
-        <button class="equal" onclick="hitung()">=</button>
         <button class="op" onclick="tambah('+')">+</button>
 
+        <button onclick="tambah('0')">0</button>
+        <button class="equal" onclick="hitung()">=</button>
         <button onclick="sqrt()">√</button>
         <button onclick="pangkat()">x²</button>
+
         <button onclick="log()">log</button>
         <button class="mode" onclick="toggleMode()">DEG</button>
-
         <button onclick="sin()">sin</button>
         <button onclick="cos()">cos</button>
+
         <button onclick="tan()">tan</button>
+        <button style="visibility:hidden"></button>
+        <button style="visibility:hidden"></button>
         <button style="visibility:hidden"></button>
     </div>
 </div>
 
 <script>
 let mode = "deg";
+let delInterval;
 
 function sapa() {
     let nama = prompt("Nama lu siapa?");
-    let jam = new Date().getHours();
-    let ucapan = jam < 12 ? "pagi" : jam < 18 ? "siang" : "malam";
-
     document.getElementById("judul").innerHTML =
-        `Halo ${nama} 👋, selamat ${ucapan}!`;
+        `Halo ${nama} 👋`;
 }
 
 function tambah(val) {
@@ -133,50 +139,74 @@ function tambah(val) {
 
 function hitung() {
     try {
-        layar.value = eval(layar.value);
+        let hasil = eval(layar.value);
+        tambahHistory(layar.value + " = " + hasil);
+        layar.value = hasil;
     } catch {
         alert("Error 😭");
     }
 }
 
-function hapus() {
+function hapusSemua() {
     layar.value = "";
 }
 
-function sqrt() {
-    layar.value = Math.sqrt(layar.value);
+function hapusSatu() {
+    layar.value = layar.value.slice(0, -1);
 }
 
-function pangkat() {
-    layar.value = Math.pow(layar.value, 2);
+// HOLD DELETE
+const delBtn = document.getElementById("delBtn");
+
+delBtn.addEventListener("mousedown", () => {
+    hapusSatu();
+    delInterval = setInterval(hapusSatu, 100);
+});
+
+delBtn.addEventListener("mouseup", () => {
+    clearInterval(delInterval);
+});
+
+delBtn.addEventListener("mouseleave", () => {
+    clearInterval(delInterval);
+});
+
+delBtn.addEventListener("touchstart", () => {
+    hapusSatu();
+    delInterval = setInterval(hapusSatu, 100);
+});
+
+delBtn.addEventListener("touchend", () => {
+    clearInterval(delInterval);
+});
+
+// HISTORY
+function tambahHistory(text) {
+    let h = document.getElementById("history");
+    h.innerHTML = text + "<br>" + h.innerHTML;
 }
 
-function log() {
-    layar.value = Math.log10(layar.value);
-}
+// SCIENTIFIC
+function sqrt() { layar.value = Math.sqrt(layar.value); }
+function pangkat() { layar.value = Math.pow(layar.value, 2); }
+function log() { layar.value = Math.log10(layar.value); }
 
-function toRad(x) {
-    return x * Math.PI / 180;
-}
+function toRad(x) { return x * Math.PI / 180; }
 
 function sin() {
-    let x = layar.value;
-    layar.value = mode === "deg" ? Math.sin(toRad(x)) : Math.sin(x);
+    layar.value = mode === "deg" ? Math.sin(toRad(layar.value)) : Math.sin(layar.value);
 }
 
 function cos() {
-    let x = layar.value;
-    layar.value = mode === "deg" ? Math.cos(toRad(x)) : Math.cos(x);
+    layar.value = mode === "deg" ? Math.cos(toRad(layar.value)) : Math.cos(layar.value);
 }
 
 function tan() {
-    let x = layar.value;
-    layar.value = mode === "deg" ? Math.tan(toRad(x)) : Math.tan(x);
+    layar.value = mode === "deg" ? Math.tan(toRad(layar.value)) : Math.tan(layar.value);
 }
 
 function toggleMode() {
     let btn = document.querySelector(".mode");
-
     if (mode === "deg") {
         mode = "rad";
         btn.innerHTML = "RAD";
