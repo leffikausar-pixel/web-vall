@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Sapa</title>
+</head>
+<body>
+
+<h1 id="teks">Klik tombol 😏</h1>
+<button onclick="sapa()">Klik</button>
+
+<script>
+function sapa() {
+    let nama = prompt("Nama lu siapa?");
+    document.getElementById("teks").innerHTML =
+        "Halo " + nama + " 👋";
+}
+</script>
+
+</body>
+</html>
