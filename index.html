@@ -1,41 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Keren</title>
+    <title>Web Vall 😎</title>
     <style>
         body {
-            background: black;
-            color: lime;
-            font-family: monospace;
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+            color: white;
             text-align: center;
-            margin-top: 100px;
         }
+
+        .container {
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            margin: 20px auto;
+            padding: 20px;
+            width: 250px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
         button {
             padding: 10px 20px;
-            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #00ffcc;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<h1 id="teks">pencet dulu lah 😏</h1>
-<button onclick="sapa()">Mulai</button>
+<div class="container">
+    <h1 id="judul">Welcome 😏</h1>
+    <p>jujur gatau ini apa, tapi keren kan 😎</p>
+
+    <button onclick="sapa()">Klik Gue</button>
+
+    <div class="card">
+        <h3>About</h3>
+        <p>gua lagi belajar js 🔥</p>
+    </div>
+
+    <div class="card">
+        <h3>Skill</h3>
+        <p>HTML, JS dikit-dikit 😭</p>
+    </div>
+
+    <div class="card">
+        <h3>Goal</h3>
+        <p>jadi programmer biar gak miskin 😏</p>
+    </div>
+</div>
 
 <script>
-function ketik(text, i = 0) {
-    if (i < text.length) {
-        document.getElementById("teks").innerHTML += text.charAt(i);
-        setTimeout(() => ketik(text, i + 1), 50);
-    }
-}
-
 function sapa() {
-    let nama = prompt("nama lu sape?");
-    let teks = "Halo " + nama + " 👋, selamat datang di web gua! 😎";
-
-    document.getElementById("teks").innerHTML = "";
-    ketik(teks);
+    let nama = prompt("nama lu sapa?");
+    document.getElementById("judul").innerHTML =
+        "Halo " + nama + " 👋";
 }
 </script>
 
