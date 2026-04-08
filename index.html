@@ -1,98 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Scientific Calc 😎</title>
+    <title>Vall Calculator 😎</title>
     <style>
         body {
-            background: #1e1e2f;
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: white;
             text-align: center;
-            font-family: Arial;
+        }
+
+        h1 {
+            margin-top: 20px;
         }
 
         .calc {
-            margin: 50px auto;
-            width: 300px;
+            margin: 20px auto;
+            width: 95%;
+            max-width: 350px;
             padding: 20px;
-            background: #2c2c3c;
-            border-radius: 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
         }
 
         input {
-            width: 90%;
-            padding: 10px;
-            font-size: 18px;
-            margin-bottom: 10px;
+            width: 100%;
+            padding: 15px;
+            font-size: 22px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
             text-align: right;
         }
 
-        button {
-            width: 60px;
-            height: 40px;
-            margin: 5px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
         }
 
-        .btn { background: #00ffcc; }
+        button {
+            padding: 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: #00c9a7;
+            color: black;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.9);
+            background: #00a88a;
+        }
+
         .op { background: #ff7675; }
+        .equal { background: #ffeaa7; }
+        .mode { background: #74b9ff; }
     </style>
 </head>
 <body>
 
-<h1>Scientific Calculator 🔥</h1>
+<h1 id="judul">Klik dulu 😏</h1>
+<button onclick="sapa()">Mulai</button>
 
 <div class="calc">
-    <input type="text" id="layar">
+    <input type="text" id="layar" readonly>
 
-    <br>
+    <div class="grid">
+        <button onclick="tambah('7')">7</button>
+        <button onclick="tambah('8')">8</button>
+        <button onclick="tambah('9')">9</button>
+        <button class="op" onclick="tambah('/')">/</button>
 
-    <button class="btn" onclick="tambah('7')">7</button>
-    <button class="btn" onclick="tambah('8')">8</button>
-    <button class="btn" onclick="tambah('9')">9</button>
-    <button class="op" onclick="tambah('/')">/</button>
+        <button onclick="tambah('4')">4</button>
+        <button onclick="tambah('5')">5</button>
+        <button onclick="tambah('6')">6</button>
+        <button class="op" onclick="tambah('*')">*</button>
 
-    <br>
+        <button onclick="tambah('1')">1</button>
+        <button onclick="tambah('2')">2</button>
+        <button onclick="tambah('3')">3</button>
+        <button class="op" onclick="tambah('-')">-</button>
 
-    <button class="btn" onclick="tambah('4')">4</button>
-    <button class="btn" onclick="tambah('5')">5</button>
-    <button class="btn" onclick="tambah('6')">6</button>
-    <button class="op" onclick="tambah('*')">*</button>
+        <button onclick="tambah('0')">0</button>
+        <button onclick="hapus()">C</button>
+        <button class="equal" onclick="hitung()">=</button>
+        <button class="op" onclick="tambah('+')">+</button>
 
-    <br>
+        <button onclick="sqrt()">√</button>
+        <button onclick="pangkat()">x²</button>
+        <button onclick="log()">log</button>
+        <button class="mode" onclick="toggleMode()">DEG</button>
 
-    <button class="btn" onclick="tambah('1')">1</button>
-    <button class="btn" onclick="tambah('2')">2</button>
-    <button class="btn" onclick="tambah('3')">3</button>
-    <button class="op" onclick="tambah('-')">-</button>
-
-    <br>
-
-    <button class="btn" onclick="tambah('0')">0</button>
-    <button class="btn" onclick="hitung()">=</button>
-    <button class="btn" onclick="hapus()">C</button>
-    <button class="op" onclick="tambah('+')">+</button>
-
-    <br>
-
-    <button onclick="sqrt()">√</button>
-    <button onclick="pangkat()">x²</button>
-    <button onclick="log()">log</button>
-
-    <br>
-
-    <button onclick="sin()">sin</button>
-    <button onclick="cos()">cos</button>
-    <button onclick="tan()">tan</button>
+        <button onclick="sin()">sin</button>
+        <button onclick="cos()">cos</button>
+        <button onclick="tan()">tan</button>
+    </div>
 </div>
 
 <script>
+let mode = "deg";
+
+// suara klik
+function klikSound() {
+    let audio = new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
+    audio.play();
+}
+
+function sapa() {
+    let nama = prompt("Nama lu siapa?");
+    document.getElementById("judul").innerHTML =
+        "Halo " + nama + " 👋";
+}
+
 function tambah(val) {
+    klikSound();
     document.getElementById("layar").value += val;
 }
 
 function hitung() {
+    klikSound();
     try {
         document.getElementById("layar").value =
             eval(document.getElementById("layar").value);
@@ -102,37 +133,61 @@ function hitung() {
 }
 
 function hapus() {
+    klikSound();
     document.getElementById("layar").value = "";
 }
 
 function sqrt() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.sqrt(x);
+    klikSound();
+    let x = layar.value;
+    layar.value = Math.sqrt(x);
 }
 
 function pangkat() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.pow(x, 2);
+    klikSound();
+    let x = layar.value;
+    layar.value = Math.pow(x, 2);
 }
 
 function log() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.log10(x);
+    klikSound();
+    let x = layar.value;
+    layar.value = Math.log10(x);
+}
+
+function toRad(x) {
+    return x * Math.PI / 180;
 }
 
 function sin() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.sin(x);
+    klikSound();
+    let x = layar.value;
+    layar.value = mode === "deg" ? Math.sin(toRad(x)) : Math.sin(x);
 }
 
 function cos() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.cos(x);
+    klikSound();
+    let x = layar.value;
+    layar.value = mode === "deg" ? Math.cos(toRad(x)) : Math.cos(x);
 }
 
 function tan() {
-    let x = document.getElementById("layar").value;
-    document.getElementById("layar").value = Math.tan(x);
+    klikSound();
+    let x = layar.value;
+    layar.value = mode === "deg" ? Math.tan(toRad(x)) : Math.tan(x);
+}
+
+function toggleMode() {
+    klikSound();
+    let btn = document.querySelector(".mode");
+
+    if (mode === "deg") {
+        mode = "rad";
+        btn.innerHTML = "RAD";
+    } else {
+        mode = "deg";
+        btn.innerHTML = "DEG";
+    }
 }
 </script>
 
