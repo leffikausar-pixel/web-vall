@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sapa Keren</title>
+    <title>Web Keren</title>
+    <style>
+        body {
+            background: black;
+            color: lime;
+            font-family: monospace;
+            text-align: center;
+            margin-top: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-<h1 id="teks">pencet tombolnya 😏</h1>
-<button onclick="sapaKeren()">pencet!</button>
+<h1 id="teks">pencet dulu lah 😏</h1>
+<button onclick="sapa()">Mulai</button>
 
 <script>
-function sapaKeren() {
-    let nama = prompt("Nama lu siapa?");
-    let jam = new Date().getHours();
-    let ucapan;
+function ketik(text, i = 0) {
+    if (i < text.length) {
+        document.getElementById("teks").innerHTML += text.charAt(i);
+        setTimeout(() => ketik(text, i + 1), 50);
+    }
+}
 
-    if (jam < 12) ucapan = "Pagi";
-    else if (jam < 18) ucapan = "Siang";
-    else ucapan = "Malam";
+function sapa() {
+    let nama = prompt("nama lu sape?");
+    let teks = "Halo " + nama + " 👋, selamat datang di web gua! 😎";
 
-    document.getElementById("teks").innerHTML =
-        `Halo ${nama} jing 👋, selamat ${ucapan}!`;
+    document.getElementById("teks").innerHTML = "";
+    ketik(teks);
 }
 </script>
 
